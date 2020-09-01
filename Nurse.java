@@ -54,6 +54,7 @@ public class Nurse {
         pString("Temperature", temp + "");
         pString("Blood Pressure", bpH+"/"+bpL);
         pString("Diabetes history", Boolean.toString(diabetesHistory));
+        pString("Discomfort level", discomfort+"");
         pString("Symptoms", Arrays.toString(symptoms));
 
 
