@@ -8,8 +8,11 @@ public class WeekTemp {
             System.out.print("Input temperature for " + dayNames[i] + "\n> ");
             dayTemps[i] = scanner.nextInt();
         }
+        double totTemp = 0;
         for (int i = 0; i < dayTemps.length; i++) {
+            totTemp += dayTemps[i];
             System.out.println(dayNames[i] + ": " + dayTemps[i] + "F");
         }
+        System.out.println("Avg: " + (totTemp/dayTemps.length) + "F");
     } 
 }
