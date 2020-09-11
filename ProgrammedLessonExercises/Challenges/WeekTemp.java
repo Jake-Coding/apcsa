@@ -8,6 +8,7 @@ public class WeekTemp {
             System.out.print("Input temperature for " + dayNames[i] + "\n> ");
             dayTemps[i] = scanner.nextInt();
         }
+        scanner.close();
         double totTemp = 0;
         for (int i = 0; i < dayTemps.length; i++) {
             totTemp += dayTemps[i];
