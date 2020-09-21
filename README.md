@@ -1,6 +1,7 @@
 # AP Computer Science A
 
-This repository is a collection of all assignments and tasks for AP Computer Science A (2020-2021)
+This repository is a collection of all assignments and tasks for AP Computer Science A (2020-2021)  
+
 Contents include:
 
 - Notes
@@ -13,3 +14,7 @@ Contents include:
 
 - Random
   - These are experiments or other assignments that didn't fall into the scope of any other folder
+
+## Contact Info
+
+Feel free to contact me through my [email](mailto:jakebridge2005@gmail.com)
