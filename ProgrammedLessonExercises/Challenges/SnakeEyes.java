@@ -39,6 +39,6 @@ public class SnakeEyes {
     }
 
     public static int rollDice(Random randomGen, int max) {
-        return (randomGen.nextInt(max) + randomGen.nextInt(max));
+        return (randomGen.nextInt(max) + randomGen.nextInt(max) + 2);
     }
 }
