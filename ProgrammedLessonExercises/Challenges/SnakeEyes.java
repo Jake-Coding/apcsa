@@ -19,11 +19,13 @@ public class SnakeEyes {
             int total = 0;
             int rolls = 0;
 
+            currDiceSum = rollDice(d6Gen, max);
+            rolls++;
+
             while (currDiceSum!= 2) {
                 rolls++;
-                currDiceSum= rollDice(d6Gen, max);
-                if (currDiceSum== 2) {break;}
                 total +=currDiceSum;
+                currDiceSum= rollDice(d6Gen, max);
             }
 
             totRolls += rolls;
