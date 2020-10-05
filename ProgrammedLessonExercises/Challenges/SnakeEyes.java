@@ -15,15 +15,15 @@ public class SnakeEyes {
 
         int i = 0;
         while (i < n) {
-            int temporary = 0;
+            int currDiceSum= 0;
             int total = 0;
             int rolls = 0;
 
-            while (temporary != 2) {
+            while (currDiceSum!= 2) {
                 rolls++;
-                temporary = rollDice(d6Gen, max);
-                if (temporary == 2) {break;}
-                total += temporary;
+                currDiceSum= rollDice(d6Gen, max);
+                if (currDiceSum== 2) {break;}
+                total +=currDiceSum;
             }
 
             totRolls += rolls;
