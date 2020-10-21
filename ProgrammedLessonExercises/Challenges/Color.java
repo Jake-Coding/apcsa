@@ -21,6 +21,14 @@ public class Color {
 
     }
 
+    private int getRand() {
+        return (int) Math.floor(Math.random() * 256);
+    }
+
+    private int hexToInt(String hexval) {
+        return (int) Integer.parseInt(hexval, 16);
+    }
+
     public void randomize() {
         setRed(getRand());
         setGreen(getRand());
@@ -38,16 +46,13 @@ public class Color {
     public int getGreen() {return green;}
     public int getBlue() {return blue;}
 
+
+
+
+
+
     public String toString() {
         return "[" + red +", " + green + ", " + blue + "]";
-    }
-
-    private int getRand() {
-        return (int) Math.floor(Math.random() * 256);
-    }
-
-    private int hexToInt(String hexval) {
-        return (int) Integer.parseInt(hexval, 16);
     }
 
     private void changeBy(double percentage) {
@@ -62,7 +67,6 @@ public class Color {
     public void lighten(double percentage) {
         changeBy(percentage);
     }
-
 
     public Color blend(Color otherColor) {
         return new Color((this.red + otherColor.getRed()) / 2, (this.green + otherColor.getGreen()) / 2, (this.blue + otherColor.getBlue()) /2);
