@@ -1,25 +1,28 @@
 import java.util.*;
+
 public class Color {
-    int red;
-    int green;
-    int blue;
+    private int red;
+    private int green;
+    private int blue;
 
     public Color(int red, int green, int blue) {
         setRed((red));
         setGreen((green));
         setBlue((blue));
     }
+
     public Color() {
         setRed(getRand());
         setGreen(getRand());
         setBlue(getRand());
     }
+
     public Color(String hex) {
         setRed(hexToInt(hex.substring(0,2)));
         setGreen(hexToInt(hex.substring(2,4)));
         setBlue(hexToInt(hex.substring(4,6)));
-
     }
+
 
     private int getRand() {
         return (int) Math.floor(Math.random() * 256);
@@ -47,10 +50,6 @@ public class Color {
     public int getBlue() {return blue;}
 
 
-
-
-
-
     public String toString() {
         return "[" + red +", " + green + ", " + blue + "]";
     }
@@ -61,9 +60,11 @@ public class Color {
         this.green *= 1 + percentage;
         this.blue *= 1 + percentage;
     }
+
     public void darken(double percentage) {
         changeBy(-1 * percentage);
     }
+
     public void lighten(double percentage) {
         changeBy(percentage);
     }
