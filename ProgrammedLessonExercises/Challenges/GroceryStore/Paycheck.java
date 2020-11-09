@@ -1,35 +1,46 @@
 import java.util.*;
 public class Paycheck {
-    private double wage;
-    final double minWage = 7.25;
+    private static final double fedTax = 0.15;
+
     private String time;
     private boolean isErroneous = false;
-    private double hours;
+    private Employee employee;
+    private double total;
 
-    public Paycheck(double wage, String date, double hours) {
-        this.wage = wage < minWage ? minWage : wage;
+    public Paycheck(Employee employee, String date) {
         this.time = date;
-        this.hours = hours;
+        this.employee = employee;
         calculate();
     }
+    public Paycheck(Employee employee) {
+        this(employee, "NO DATE");
+    }
 
-    private double calculate(){
-        if (hours > 100) {
+    private void calculate(){
+        if (employee.getCurrHours() > 100) {
             isErroneous = true;
-            return 0;
+            total = 0;
         }
         else {
-            double total = hours * wage;
-            if (total > 1500) {
+            double beforeTax= employee.getCurrHours() * employee.getWage();
+            if (beforeTax > 1500) {
                 isErroneous = true;
-                return 0;
+                total = 0;
             }
-            return total;
+            else { total = beforeTax * (1-fedTax);}
         }
 
     }
 
     public boolean isError() {
         return isErroneous;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public String toString() {
+        return employee.getName() + " was paid " + total + " on " + time;
     }
 }
