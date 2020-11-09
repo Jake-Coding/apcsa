@@ -13,6 +13,17 @@ public class Tester {
 
         Employee myEmp = new Employee(name, position);
         System.out.println(myEmp);
+        System.out.println("ID: "+myEmp.getID());
+
+        Employee secondEmp = new Employee("second fella", "hes second lmao", 1000, 3, 20);
+        System.out.println(secondEmp);
+        System.out.println("ID:" + secondEmp.getID());
+        try {
+            Paycheck thisThrowsAnError = secondEmp.getPaid("this should throw an error if its cool");
+        } catch (Exception e) {
+            System.out.println("it threw an error pog");
+        }
+
 
         myEmp.work(10.3);
         System.out.println(myEmp);
@@ -21,7 +32,12 @@ public class Tester {
 
         myEmp.work(101);
         System.out.println(myEmp);
-        myEmpPaid = myEmp.getPaid("this throws an error");
+
+        try {
+            myEmpPaid = myEmp.getPaid("this throws an error");
+        } catch (Exception e) {
+            System.out.println("error time");
+        }
 
 
     }

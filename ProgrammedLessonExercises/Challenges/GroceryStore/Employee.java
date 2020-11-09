@@ -33,6 +33,7 @@ public class Employee {
     public double getWage() {return wage;}
     public double getCurrHours() {return currHours;}
     public double getTotalHours() {return overallHours;}
+    public int getID() {return id;}
 
     public void setWage(double wage) {this.wage = wage;}
     
