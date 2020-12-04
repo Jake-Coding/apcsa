@@ -34,6 +34,9 @@ public class TodoList {
     }
 
 
+    public void addTodo(Todo t) {
+        this.list.add(t);
+    }
 
     public String unfinishedTasks() {
         String str = "";
@@ -54,7 +57,9 @@ public class TodoList {
         return str;
     }
 
-
+    public int size() {
+        return this.list.size();
+    }
     public void clear() {
         this.list = new ArrayList<Todo>();
     }

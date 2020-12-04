@@ -10,7 +10,7 @@ public class Todo {
         this.name = name;
         this.description = desc;
         this.dueDate = due;
-        this.priority = priority;
+        this.priority = priority < 1 ? 1 : priority > 5 ? 5 : priority;
         this.done = done;
 
     }
@@ -35,6 +35,7 @@ public class Todo {
     public boolean isFinished() {
         return done;
     }
+
     public void setDesc(String desc) {
         this.description = desc;
     }
