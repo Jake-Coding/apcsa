@@ -4,11 +4,13 @@ public class UserInterface {
     public static void main(String[] args) {
         TodoList todos = new TodoList("todo_list.txt");
         Scanner userScanner = new Scanner(System.in);
+
         while (true) {
             displayMenu(todos);
             System.out.print("> ");
             String input = userScanner.nextLine();
-            todos = handleInput(input, todos, userScanner);
+            todos = handleInput(input, todos, new Scanner(System.in));
+
         }
     }
 
@@ -52,32 +54,32 @@ public class UserInterface {
     public static TodoList updateList(TodoList list, Scanner s) {
         if (list.isEmpty()) {return list;}
         System.out.print("Which item would you like to change?\n> ");
-        int index = s.nextInt();
+        int index = Integer.parseInt(s.nextLine());
         while (index >= list.size()) {
             System.out.print("Invalid. Please try again.\n");
             System.out.print("Which item would you like to change?\n> ");
-            index = s.nextInt();
+            index = Integer.parseInt(s.nextLine());
         }
         System.out.println("Change:\n0: Description\n1: Due date\n2: Priority\n3: Mark as finished.");
         System.out.print("> ");
-        int selection = s.nextInt();
+        int selection = Integer.parseInt(s.nextLine());
         while (selection > 3 || selection < 0) {
             System.out.println("Invalid. Please try again.");
             System.out.print("> ");
-            selection = s.nextInt();
+            selection = Integer.parseInt(s.nextLine());
         }
         switch (selection) {
             case 0:
-                System.out.print("Enter new description\n> ");
+                System.out.println("Enter new description\n> ");
                 list.modifyTaskDesc(index, s.nextLine());
                 break;
              case 1:
-                System.out.print("Enter new due date\n> ");
+                System.out.println("Enter new due date\n>");
                 list.modifyTaskDue(index, s.nextLine());
                 break;
             case 2:
-                System.out.print("Enter new priority\n> ");
-                list.modifyTaskPriority(index, s.nextInt());
+                System.out.println("Enter new priority\n>");
+                list.modifyTaskPriority(index, Integer.parseInt(s.nextLine()));
                 break;
             case 3:
                 list.finishTask(index);
@@ -100,7 +102,7 @@ public class UserInterface {
         System.out.print("What is the due date?\n> ");
         dueDate = s.nextLine();
         System.out.print("What is the priority?\n> ");
-        priority = s.nextInt();
+        priority = Integer.parseInt(s.nextLine());
         Todo t = new Todo(name, description, dueDate, priority);
         list.addTodo(t);
         return list;

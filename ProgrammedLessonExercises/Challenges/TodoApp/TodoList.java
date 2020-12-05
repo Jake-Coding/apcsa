@@ -29,7 +29,7 @@ public class TodoList {
             }
             fileScanner.close();
 
-        } catch (Exception e) {e.printStackTrace();}
+        } catch (Exception e) {}
         this.list = temp_tasks;
     }
 
