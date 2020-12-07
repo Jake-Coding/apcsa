@@ -15,6 +15,15 @@ public class TodoList {
     }
 
 
+    public ArrayList<Todo> filterByPriority(int priority) {
+        ArrayList<Todo> return_values = new ArrayList<Todo>();
+        for (Todo t : this.list) {
+            if (t.getPriority() <= priority) {return_values.add(t);}
+        }
+        return return_values;
+    }
+
+
     public void loadTasks(String filename) {
         Scanner fileScanner;
         File f;

@@ -19,6 +19,7 @@ public class UserInterface {
             System.out.println(todos);
             System.out.println("u: update a task");
             System.out.println("c: clear all tasks");
+            System.out.println("f: filter tasks by priority");
         }
         System.out.println("a: add");
         System.out.println("q: quit");
@@ -36,6 +37,10 @@ public class UserInterface {
                 tempList.clear();
                 break;
             
+            case "f":
+                filter_display(tempList, s);
+                break;
+            
             case "a":
                 tempList = addTodo(tempList, s);
                 break;
@@ -50,6 +55,20 @@ public class UserInterface {
         }
         return tempList;
     }
+
+    
+    public static void filter_display(TodoList todos, Scanner s) {
+        System.out.print("Display items more or equal importance to which priority?\n> ");
+        int p = Integer.parseInt(s.nextLine());
+        while (p > 5 || p < 0) {
+            System.out.print("Invalid. Please try again.\n> ");
+            p = Integer.parseInt(s.nextLine());
+        }
+        System.out.println("PRIORITY " + p + "OR MORE IMPORTANT\n-------");
+        System.out.println(todos.filterByPriority(p));
+        System.out.println("--------\n\n\n");
+    }
+
 
     public static TodoList updateList(TodoList list, Scanner s) {
         if (list.isEmpty()) {return list;}

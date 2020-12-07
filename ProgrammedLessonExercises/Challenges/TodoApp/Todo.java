@@ -1,5 +1,5 @@
 import java.io.*;
-public class Todo {
+public class Todo  {
     private String description;
     private String name;
     private String dueDate;
@@ -35,6 +35,7 @@ public class Todo {
     public boolean isFinished() {
         return done;
     }
+    public int getPriority() { return priority;}
 
     public void setDesc(String desc) {
         this.description = desc;
