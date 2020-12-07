@@ -51,13 +51,13 @@ public class Todo  {
     }
 
     public String toString() {
-        return    name + ","+ description + "," + dueDate + "," + priority + "," + done;
+        return    name + ","+ description + "," + dueDate + "," + priority + "," + (done ? "finished" : "unfinished");
     }
 
     public static Todo parseString(String str) {
         str.replace("[", "");
         str.replace("]", "");
         String[] arr = str.split(",");
-        return new Todo(arr[0], arr[1], arr[2], Integer.parseInt(arr[3]), Boolean.parseBoolean(arr[4]));
+        return new Todo(arr[0], arr[1], arr[2], Integer.parseInt(arr[3]), (arr[4].equals("finished") ? true : false));
     } 
 }

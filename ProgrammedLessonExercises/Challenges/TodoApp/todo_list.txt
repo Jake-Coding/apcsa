@@ -1,2 +1,2 @@
-Vibe,GAME??!?!?!?,now,1,false
-h,e,l,5,false
+Vibe,GAME??!?!?!?,now,1,finished
+h,e,l,5,finished
