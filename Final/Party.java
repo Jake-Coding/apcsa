@@ -1,0 +1,188 @@
+import java.util.*;
+
+
+import java.io.*;
+public class Party {
+    private final static int partySize = 4;
+    private PlayerCharacter[] players;
+    private String partyName;
+
+    public Party(String partyName, PlayerCharacter[] players) {
+        this.partyName = partyName;
+        assert players.length == partySize;
+        this.players = players;
+    }
+    public Party() {
+        players = new PlayerCharacter[partySize];
+        createParty();
+    }
+    public Party(String filename) {
+        players = new PlayerCharacter[partySize];
+        File f = new File(filename);
+        File fForValidation = new File(filename);
+        try {
+            if (!validate(new Scanner(fForValidation))) {throw new Exception("INVALID FILE");}
+            Scanner fileScanner = new Scanner(f);
+
+
+            parseFile(fileScanner);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            createParty();
+        }
+        
+    }
+    public boolean rerollChar(String name) {
+        for (PlayerCharacter player : players) {
+            if (player.getName().equals(name)) {
+                player.createArchetype(player.getThisArchetype());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean validate(Scanner fileScanner){
+        try {
+            PlayerCharacter[] tempPlayers = new PlayerCharacter[partySize];
+            fileScanner.nextLine(); // party name
+            for (int i = 0; i < partySize; i++) {
+                tempPlayers[i] = PlayerCharacter.parseString(fileScanner.nextLine());
+                if (!PlayerCharacter.validate(tempPlayers[i])) {return false;}
+            }
+            if (fileScanner.hasNextLine()) {
+                throw new Exception("File is too long.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+        
+    }
+
+    private void parseFile(Scanner fileScanner) throws Exception {
+        this.partyName = fileScanner.nextLine();
+        for (int i = 0; i < partySize; i++) {
+            players[i] = PlayerCharacter.parseString(fileScanner.nextLine());
+        }
+
+    }
+
+    public String displayOptionString() {
+        String s = "";
+        for (int i = 0; i < partySize; i++) {
+            if (players[i] != null) {
+                s += i + ": " + players[i];
+            }
+        }
+        return s;
+    }
+
+    private void createParty() {
+        Scanner scan = new Scanner(System.in);
+        String[] classes = new String[partySize];
+        
+        System.out.print("Name of your party\n> ");
+        String pName = scan.nextLine();
+        this.partyName = pName;
+        for (int i = 0; i < partySize; i++) {
+            // VALIDATE ARCHETYPE
+            System.out.println("Character #" + (i + 1));
+            System.out.print("Class (Knight, Peasant, Cleric, Mage, Courtier, with correct capitalization): ");
+            String archetype = scan.nextLine();
+            while (!PlayerCharacter.isValidArch(archetype)) {
+                System.out.print("Invalid\nClass (Knight, Peasant, Cleric, Mage, Courtier, with correct capitalization): ");
+                archetype = scan.nextLine();
+            }
+            String[] temp = Arrays.copyOf(classes, partySize);
+            temp[i] = archetype;
+            while (!validateClassList(temp)) {
+                System.out.println("Invalid class list\nClass (Knight, Peasant, Cleric, Mage, Courtier, with correct capitalization): ");
+                archetype = scan.nextLine();
+                while (!PlayerCharacter.isValidArch(archetype)) {
+                    System.out.print("Invalid\nClass (Knight, Peasant, Cleric, Mage, Courtier, with correct capitalization): ");
+                    archetype = scan.nextLine(); 
+                }
+                temp[i] = archetype;
+            }
+            classes = Arrays.copyOf(temp, partySize);
+            
+            // MAKE CHARACTER
+
+            PlayerCharacter tempChar = PlayerCharacter.generateCharacter(archetype);
+            System.out.println(tempChar);
+            System.out.print("Do you like this character? (y/n)\n> ");
+            String likes = scan.nextLine();
+            while (!likes.equalsIgnoreCase("y")) {
+                tempChar = PlayerCharacter.generateCharacter(archetype);
+                System.out.println(tempChar);
+                System.out.print("Do you like this character? (y/n)\n> ");
+                likes = scan.nextLine();
+            }
+            System.out.print("Give them a name\n> "); 
+            String name = scan.nextLine();
+            tempChar.setName(name);
+            players[i] = tempChar;
+            System.out.println("Character set!\n\n\n");
+
+        }
+        scan.close();
+            
+    }
+
+
+       
+    private boolean validateClassList(String[] classes) {
+        for (int i = 0; i < classes.length; i++) {
+            String c = classes[i];
+            if (c != null && count(classes, c) > 2) {
+                return false;
+            }
+        }
+        return true;
+    }
+    private int count(String[] arr, String v) {
+        int count = 0;
+        for (String val : arr) {
+            if (v.equals(val)) {
+                count++;
+            }
+        }
+        return count;
+    } 
+
+    public String toString() {
+        String s = "";
+        s += partyName + "\n";
+        for (PlayerCharacter player : players) {
+            s += player.toString() + "\n";
+        }
+        return s;
+    }
+    public String toFileString() {
+        String s = "";
+        s += partyName + "\n";
+        for (PlayerCharacter player : players) {
+            s += player.reprString() + "\n";
+        }
+        return s;
+
+    }
+
+    public void toFile(String filename) throws IOException {
+        File f = new File(filename);
+        f.createNewFile();
+        PrintWriter fWriter = new PrintWriter(f);
+        fWriter.println(toFileString());
+        fWriter.close();
+    
+
+    }
+
+
+
+
+
+}
