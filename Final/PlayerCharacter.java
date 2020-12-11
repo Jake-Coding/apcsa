@@ -6,6 +6,7 @@ public class PlayerCharacter {
     private String name;
     private Random r = new Random();
 
+    // CONSTRUCTORS
     public PlayerCharacter(String charName, String highestAbility) {
         name = charName;
         resetScores();
@@ -17,17 +18,13 @@ public class PlayerCharacter {
         setAllScores(scoreValues);
     }
 
-    public int getRandLow() {
-        return r.nextInt(6);
+    // GETTERS / SETTERS
+         // LOCAL
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getRandHigh() {
-        return r.nextInt(3) + 7;
-    }
-
-    private void resetScores() {
-        setAllScores(new int[] { 0, 0, 0, 0, 0 });
-    }
+    public String getName() {return name;}   
 
     private void setScore(String scoreName, int value) {
         scores.put(scoreName, value);
@@ -41,6 +38,10 @@ public class PlayerCharacter {
         }
 
     }
+    
+    private void resetScores() {
+        setAllScores(new int[] { 0, 0, 0, 0, 0 });
+    }
 
     public int getScoreTotal() {
         int t = 0;
@@ -49,23 +50,6 @@ public class PlayerCharacter {
         }
         return t;
     }
-
-    public void createArchetype(String highestAbility) {
-        while (getScoreTotal() < 8 || getScoreTotal() > 28) {
-            for (String scoreName : scoreNames) {
-                if (scoreName.equals(highestAbility)) {
-                    setScore(scoreName, getRandHigh());
-                } else {
-                    setScore(scoreName, getRandLow());
-                }
-
-            }
-        }
-    }
-    public static String[] getPlayableClasses() {
-        return new String[] {"Knight", "Peasant", "Cleric", "Mage", "Courtier"};
-    }
-
     public String getThisArchetype() {
         String maxScore = "";
         int max = 0;
@@ -77,14 +61,13 @@ public class PlayerCharacter {
 
         }
         return getArchetypeName(maxScore);
+    }   
 
+        // STATIC GETTERS
+    public static String[] getPlayableClasses() {
+        return new String[] {"Knight", "Peasant", "Cleric", "Mage", "Courtier"};
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getName() {return name;}
-
+    
     public static String getArchetypeName(String highestAbility) {
         switch (highestAbility) {
             case "strength":
@@ -120,10 +103,52 @@ public class PlayerCharacter {
         }
     }
 
+    // HELPER FUNCTIONS
+    public int getRandLow() {
+        return r.nextInt(6);
+    }
+
+    public int getRandHigh() {
+        return r.nextInt(3) + 7;
+    }
+
+    public void createArchetype(String highestAbility) {
+        for (String scoreName : scoreNames) {
+            if (scoreName.equals(highestAbility)) {
+                setScore(scoreName, getRandHigh());
+            } else {
+                setScore(scoreName, getRandLow());
+            }
+        }
+        while (!validate(this)) {
+            for (String scoreName : scoreNames) {
+                if (scoreName.equals(highestAbility)) {
+                    setScore(scoreName, getRandHigh());
+                } else {
+                    setScore(scoreName, getRandLow());
+                }
+
+            }
+        }
+    }
+
+    // VALIDATION FUNCTIONS
     public static boolean validate(PlayerCharacter pChar) {
         return (pChar.getScoreTotal() >= 8 && pChar.getScoreTotal() <= 28);
     }
+    
+    public static boolean isValidArch(String archetypeName) {
+        for (String c : new String[] {"Knight", "Peasant", "Cleric", "Mage", "Courtier"}) {
+            if (c.equals(archetypeName)) {
+                return true;
+            }
 
+        }
+        return false;
+    }
+
+
+    // toString and reprString methods
     public String toString() {
         return name + " (" + getThisArchetype() + ")" + " : " + scores.toString();
     }
@@ -142,6 +167,7 @@ public class PlayerCharacter {
 
     }
 
+    // parse from String
     public static PlayerCharacter parseString(String s) {
         String[] arr = s.split(",");
         String[] scoreArrStr = Arrays.copyOfRange(arr, 2, 7);
@@ -154,18 +180,11 @@ public class PlayerCharacter {
         return new PlayerCharacter(arr[0], scoreArrInt);
     }
 
+    // Generate a character of a given archetype
     public static PlayerCharacter generateCharacter(String archetype) {
         return new PlayerCharacter("", getHighestScoreFromArchetypeName(archetype));
 
     }
 
-    public static boolean isValidArch(String archetypeName) {
-        for (String c : new String[] {"Knight", "Peasant", "Cleric", "Mage", "Courtier"}) {
-            if (c.equals(archetypeName)) {
-                return true;
-            }
 
-        }
-        return false;
-    }
 }

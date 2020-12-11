@@ -1,12 +1,12 @@
 import java.util.*;
-
-
 import java.io.*;
 public class Party {
     private final static int partySize = 4;
     private PlayerCharacter[] players;
     private String partyName;
 
+
+    // CONSTRUCTORS
     public Party(String partyName, PlayerCharacter[] players) {
         this.partyName = partyName;
         assert players.length == partySize;
@@ -28,38 +28,101 @@ public class Party {
             parseFile(fileScanner);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            createParty();
+            System.out.println("Invalid file");
         }
         
     }
-    public boolean rerollChar(String name) {
-        for (PlayerCharacter player : players) {
-            if (player.getName().equals(name)) {
-                player.createArchetype(player.getThisArchetype());
-                return true;
-            }
-        }
-        return false;
-    }
 
+
+    // VALIDATION AND HELPER FUNCTIONS
+    
     private static boolean validate(Scanner fileScanner){
         try {
+            String[] classes = new String[partySize];
             PlayerCharacter[] tempPlayers = new PlayerCharacter[partySize];
             fileScanner.nextLine(); // party name
             for (int i = 0; i < partySize; i++) {
                 tempPlayers[i] = PlayerCharacter.parseString(fileScanner.nextLine());
+                classes[i] = tempPlayers[i].getThisArchetype();
                 if (!PlayerCharacter.validate(tempPlayers[i])) {return false;}
             }
-            if (fileScanner.hasNextLine()) {
+            if (!validateClassList(classes)) {return false;}
+            if (fileScanner.hasNextInt()) {
                 throw new Exception("File is too long.");
             }
+
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
         return true;
         
+    }
+    
+    private static boolean validateClassList(String[] classes) {
+        for (int i = 0; i < classes.length; i++) {
+            String c = classes[i];
+            if (c != null && count(classes, c) > 2) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+        // helper for validating the class list
+    private static int count(String[] arr, String v) {
+        int count = 0;
+        for (String val : arr) {
+            if (v.equals(val)) {
+                count++;
+            }
+        }
+        return count;
+    } 
+
+
+    // Reroll a character with a given name
+    public boolean rerollChar(String name) {
+        for (PlayerCharacter player : players) {
+            if (player.getName().equals(name)) {
+                player.createArchetype(PlayerCharacter.getHighestScoreFromArchetypeName(player.getThisArchetype()));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    
+        
+    
+    // toString and file methods
+    public String toString() {
+        String s = "";
+        s += partyName + "\n";
+        for (PlayerCharacter player : players) {
+            s += player.toString() + "\n";
+        }
+        return s;
+    }
+
+    public String toFileString() {
+        String s = "";
+        s += partyName + "\n";
+        for (PlayerCharacter player : players) {
+            s += player.reprString() + "\n";
+        }
+        return s.strip();
+
+    }
+
+    public void toFile(String filename) throws IOException {
+        File f = new File(filename);
+        f.createNewFile();
+        FileWriter fWriter = new FileWriter(f);
+        fWriter.write(toFileString());
+        fWriter.close();
+    
+
     }
 
     private void parseFile(Scanner fileScanner) throws Exception {
@@ -69,6 +132,9 @@ public class Party {
         }
 
     }
+
+
+    // User input and display
 
     public String displayOptionString() {
         String s = "";
@@ -99,7 +165,7 @@ public class Party {
             String[] temp = Arrays.copyOf(classes, partySize);
             temp[i] = archetype;
             while (!validateClassList(temp)) {
-                System.out.println("Invalid class list\nClass (Knight, Peasant, Cleric, Mage, Courtier, with correct capitalization): ");
+                System.out.println("Already 2 of that class!\nClass (Knight, Peasant, Cleric, Mage, Courtier, with correct capitalization): ");
                 archetype = scan.nextLine();
                 while (!PlayerCharacter.isValidArch(archetype)) {
                     System.out.print("Invalid\nClass (Knight, Peasant, Cleric, Mage, Courtier, with correct capitalization): ");
@@ -131,58 +197,6 @@ public class Party {
         scan.close();
             
     }
-
-
-       
-    private boolean validateClassList(String[] classes) {
-        for (int i = 0; i < classes.length; i++) {
-            String c = classes[i];
-            if (c != null && count(classes, c) > 2) {
-                return false;
-            }
-        }
-        return true;
-    }
-    private int count(String[] arr, String v) {
-        int count = 0;
-        for (String val : arr) {
-            if (v.equals(val)) {
-                count++;
-            }
-        }
-        return count;
-    } 
-
-    public String toString() {
-        String s = "";
-        s += partyName + "\n";
-        for (PlayerCharacter player : players) {
-            s += player.toString() + "\n";
-        }
-        return s;
-    }
-    public String toFileString() {
-        String s = "";
-        s += partyName + "\n";
-        for (PlayerCharacter player : players) {
-            s += player.reprString() + "\n";
-        }
-        return s;
-
-    }
-
-    public void toFile(String filename) throws IOException {
-        File f = new File(filename);
-        f.createNewFile();
-        PrintWriter fWriter = new PrintWriter(f);
-        fWriter.println(toFileString());
-        fWriter.close();
-    
-
-    }
-
-
-
 
 
 }
