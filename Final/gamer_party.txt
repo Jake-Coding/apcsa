@@ -1,0 +1,5 @@
+The legend of gamers
+Steve,Mage,0,3,1,9,2
+OtherSteve,Cleric,0,0,7,3,0
+ThirdSteve,Peasant,0,8,1,5,0
+ViebCzech,Cleric,1,0,7,5,2

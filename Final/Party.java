@@ -16,20 +16,16 @@ public class Party {
         players = new PlayerCharacter[partySize];
         createParty();
     }
-    public Party(String filename) {
+    public Party(String filename) throws Exception{
         players = new PlayerCharacter[partySize];
         File f = new File(filename);
         File fForValidation = new File(filename);
-        try {
-            if (!validate(new Scanner(fForValidation))) {throw new Exception("INVALID FILE");}
-            Scanner fileScanner = new Scanner(f);
+        if (!validate(new Scanner(fForValidation))) {throw new Exception("INVALID FILE");}
+        Scanner fileScanner = new Scanner(f);
 
 
-            parseFile(fileScanner);
+        parseFile(fileScanner);
 
-        } catch (Exception e) {
-            System.out.println("Invalid file");
-        }
         
     }
 
@@ -194,7 +190,6 @@ public class Party {
             System.out.println("Character set!\n\n\n");
 
         }
-        scan.close();
             
     }
 
