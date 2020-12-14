@@ -1,6 +1,0 @@
-Kingdom of Failure (smh)
-Sam,Knight,10,10,3,5,1
-Leia,Cleric,5,5,9,5,4
-Clair,Knight,10,5,1,1,5
-Phil,Mage,0,0,0,8,0
-Jim,Knight,20,20,30,40,50

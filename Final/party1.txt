@@ -1,5 +1,0 @@
-Kingdom of Glory
-Sam,Knight,10,5,3,5,1
-Leia,Cleric,5,5,9,5,4
-Clair,Knight,9,4,3,0,3
-Phil,Mage,3,5,4,8,0
