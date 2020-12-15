@@ -6,15 +6,16 @@ public class Party {
     private String partyName;
 
 
+
     // CONSTRUCTORS
     public Party(String partyName, PlayerCharacter[] players) {
         this.partyName = partyName;
         assert players.length == partySize;
         this.players = players;
     }
-    public Party() {
+    public Party(Scanner scanner) {
         players = new PlayerCharacter[partySize];
-        createParty();
+        createParty(scanner);
     }
     public Party(String filename) throws Exception{
         players = new PlayerCharacter[partySize];
@@ -142,8 +143,8 @@ public class Party {
         return s;
     }
 
-    private void createParty() {
-        Scanner scan = new Scanner(System.in);
+    private void createParty(Scanner scanner) {
+        Scanner scan = scanner;
         String[] classes = new String[partySize];
         
         System.out.print("Name of your party\n> ");

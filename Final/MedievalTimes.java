@@ -46,7 +46,7 @@ public class MedievalTimes {
     }
 
     public static void makeParty(Scanner s) {
-        Party userParty = new Party();
+        Party userParty = new Party(s);
         System.out.print("Save to which file? (type no to not save)\n> ");
         String fName = s.nextLine();
         if (!fName.equals("no")) {
