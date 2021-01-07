@@ -53,7 +53,7 @@ public class ArrayPractice {
             }
 
         }
-        boolean testing_jan6 = true;
+        boolean testing_jan6 = false;
         if (testing_jan6) {
             int[] testing_array = {1,3,5,7};
             printArray(testing_array); // 1 3 5 7
@@ -63,6 +63,12 @@ public class ArrayPractice {
             System.out.println(mean(testing_array)); // 4.0
             reverse(testing_array);
             printArray(testing_array); // 1 5 3 7 
+        }
+        boolean testing_jan7 = true;
+        if (testing_jan7) {
+            int[] testing_array = {5,3,1,7};
+            sort(testing_array, 0, 3);
+            printArray(testing_array);
         }
     }
 
@@ -99,6 +105,57 @@ public class ArrayPractice {
             data[i] = temp;
         }
 
+    }
+
+    public static int search(int[] haystack, int needle) {
+        for (int i = 0; i < haystack.length; i++) {
+            if (haystack[i] == needle) {return i;}
+        }
+        return -1;
+    }
+
+
+
+    public static void sort(int[] data, int leftBound, int rightBound) {
+        if (leftBound < rightBound) {
+            int middleBound = (leftBound + rightBound) / 2;
+            sort(data, leftBound, middleBound);
+            sort(data, middleBound+1, rightBound);
+            combine(data, leftBound, middleBound, rightBound);
+        }
+    }
+    public static void combine(int[] data, int left, int mid, int right) {
+        int[] leftArr = new int[mid+1-left];
+        int[] rightArr = new int[right-mid];
+
+        for (int i = 0; i < leftArr.length; i++) {
+            leftArr[i] = data[i + left];
+        }
+        for (int i = 0; i < rightArr.length; i++) {
+            rightArr[i] = data[i + 1 + mid];
+        }
+
+        int li = 0;
+        int ri = 0;
+        for (int i = left; i < right+1; i++) {
+            if (li < leftArr.length) {
+                if (ri < rightArr.length) {
+                    if (leftArr[li] < rightArr[ri]) {
+                        data[i] = leftArr[li];
+                        li++;
+                    } else {
+                        data[i] = rightArr[ri];
+                        ri++;
+                    }
+                } else {
+                    data[i] = leftArr[li];
+                    li++;
+                }
+            } else if (ri < rightArr.length) {
+                data[i] = rightArr[ri];
+                ri++;
+            }
+        }
     }
 
 }
