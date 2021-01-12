@@ -1,17 +1,8 @@
 import java.util.*;
 public class sortingAlgs {
-    public static void main(String[] args) {
-        int[] testArray = {7,5,1,3};
-        System.out.println(Arrays.toString(selectionSort(testArray, 0)));
-       
-        testArray = new int[] {7, 5, 1, 3};
-        System.out.println(Arrays.toString(insertionSort(testArray, testArray.length-1))); 
 
-        testArray = new int[] {7, 5, 1, 3};
-        System.out.println(Arrays.toString(bubbleSort(testArray))); 
-    }
-
-    public static int[] selectionSort(int[] data, int start) {
+    public static int[] selectionSort(int[] data, int startLowBound) {
+        int start = startLowBound;
         // break condition
         if (start == data.length) {return data;}
 
@@ -30,7 +21,8 @@ public class sortingAlgs {
 
     }
 
-    public static int[] insertionSort(int[] data, int start) {
+    public static int[] insertionSort(int[] data, int startUpperBound) {
+        int start = startUpperBound;
         // break condition
         if (start == 0) {return data;}
 
