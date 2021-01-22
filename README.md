@@ -14,7 +14,3 @@ Contents include:
 
 - Random
   - These are experiments or other assignments that didn't fall into the scope of any other folder
-
-## Contact Info
-
-Feel free to contact me through my [email](mailto:jakebridge2005@gmail.com)
