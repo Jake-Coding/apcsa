@@ -1,6 +1,16 @@
 import java.util.*;
 public class Problems {
     public static void main(String[] args) {
+        System.out.println("here's whats going to be printed.");
+
+        System.out.println("1. combined odd numbers and even numbers up to 10");
+        System.out.println("2. {1,2,1} with duplicates removed}");
+        System.out.println("3. The intersection of {1,2} with odd numbers up to 10");
+        System.out.println("4. {3,4,5,1} sorted and a 3 inserted");
+        System.out.println("5. The above, but reversed");
+        System.out.println("6. The result of getPoints from {3,4,7,7,1,0}");
+        System.out.println("7. The points & midpoints of the above.");
+        System.out.println("8. 6, but the points are sorted.");
         List<String> veg = new ArrayList<String>();
         for (int i = 1; i < 10; i+= 2) {
             veg.add(String.valueOf(i));
