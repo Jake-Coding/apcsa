@@ -7,11 +7,13 @@ public class Search {
 
         Arrays.sort(fruits);
 
-        System.out.println(binIndexOf("cherry", fruits));
-        System.out.println(binIndexOf("notInList", fruits));
+        // System.out.println(binIndexOf("cherry", fruits));
+        // System.out.println(binIndexOf("notInList", fruits));
         List<String> a = new ArrayList<String>(Arrays.asList(new String[]{"a", "b", "d"}));
         List<String> b = new ArrayList<String>(Arrays.asList(new String[]{"a","c","e"}));
         System.out.println(merge(a, b));
+        List<String> toBeSorted = new ArrayList<String>(Arrays.asList(new String[]{"3", "2", "5", "1", "b", "z", "a"}));
+        System.out.println(mergeSort(toBeSorted));
 
     }
 
@@ -66,4 +68,22 @@ public class Search {
         }
         return merged;
     }
+
+    public static ArrayList<String> mergeSort(List<String> list) {
+        if (list.size() < 2) return new ArrayList<String>(list);
+        int pivot = list.size() / 2;
+        ArrayList<String> firstHalf = new ArrayList<String>(pivot);
+        ArrayList<String> secondHalf = new ArrayList<String>(pivot);
+
+        for (int i = 0; i < list.size(); i++) {
+            if (i < pivot) {
+                firstHalf.add(list.get(i));
+            } else {
+                secondHalf.add(list.get(i));
+            }
+        }
+        return merge(mergeSort(firstHalf), mergeSort(secondHalf));
+
+    }
+
 }
