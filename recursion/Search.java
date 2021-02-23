@@ -48,7 +48,7 @@ public class Search {
         ArrayList<String> merged = new ArrayList<String>(a.size() + b.size());
         while (a_pointer < a.size() && b_pointer < b.size()) {
             int comp_result = a.get(a_pointer).compareTo(b.get(b_pointer));
-            if (comp_result == 1) {
+            if (comp_result < 0) {
                 merged.add(a.get(a_pointer));
                 a_pointer++;
             } else {
