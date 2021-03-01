@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 public class App extends JFrame {
 
@@ -10,10 +11,34 @@ public class App extends JFrame {
     private JButton numButton;
     private JLabel numText;
     private int num;
+
     public static void main(String[] args) throws Exception {
-        App app = new App();
-        app.setVisible(true);
+        ArrayList<String> food = new ArrayList<String>();
+        food.add("apple");
+        food.add("pear");
+        food.add("cheese");
+
+        food.forEach(f-> System.out.println(f));
+
+        var t = new String("Hello"); // var!
+        t = t.toLowerCase();
+
+
+        EventQueue.invokeLater(()-> {
+            App app = new App();
+            app.setVisible(true);
+        });
     }
+
+
+    public static int sum(int... args) { // args!
+        int t = 0;
+        for (int i : args) {
+            t+=i;
+        }
+        return t;
+    }
+
 
     public App() {
         setTitle("Example app :)");
