@@ -7,7 +7,7 @@ import javax.swing.GroupLayout.*;
 
 public class App extends JFrame{
 
-    private JLabel output;
+    private JTextArea output;
     private String value1, op, value2;
 
 
@@ -27,14 +27,19 @@ public void clear() {
     updateOutput();
 }
     public App() {
-        output = new JLabel("");
-        output.setPreferredSize(new Dimension(200, 30));
+        output = new JTextArea("");
+       output.setFont(new Font("Serif", Font.BOLD, 20)); 
+        output.setMaximumSize(new Dimension(200, 480));
+        output.setMinimumSize(new Dimension(200, 30));
+        output.setPreferredSize(new Dimension(200, 40));
+        output.setLineWrap(true);
+        output.setEditable(false);
         ArrayList<JComponent> components = new ArrayList<JComponent>();
         components.add(output);
         for (JComponent j : getNumButtons()) {
             components.add(j);
         }
-        JButton sqrtButton = new JButton("sqrt");
+        JButton sqrtButton = new JButton("√");
         sqrtButton.addActionListener((event)-> {
             setOp("sqrt");
             doMath();
@@ -90,7 +95,7 @@ public void clear() {
             JComponent comp = components.get(i);
             comp.setPreferredSize(new Dimension(50, 50));
             comp.setSize(new Dimension(50, 50));
-            comp.setToolTipText(comp.getPreferredSize().toString() + comp.getSize().toString());
+            // comp.setToolTipText(comp.getPreferredSize().toString() + comp.getSize().toString());
             // comp.setPreferredSize(new Dimension(50,20));
             components.set(i, comp);
         }
@@ -99,7 +104,7 @@ public void clear() {
         
         createLayout(componentArr);
         setTitle("Calculator");
-        setSize(1000,1000);
+        setSize(480,640);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         clear();
@@ -119,17 +124,18 @@ public void clear() {
         gl.setAutoCreateContainerGaps(true);
         gl.setAutoCreateGaps(true);
         ParallelGroup[] horizGroups = new ParallelGroup[] {gl.createParallelGroup(), gl.createParallelGroup(), gl.createParallelGroup()};
-        
+        // horizGroups[0].addComponent(arg[0]);
         for (int i = 1; i < arg.length; i++) {
             JComponent ar = arg[i];
             horizGroups[(i-1) % (horizGroups.length)].addComponent(ar); 
         }
         
         SequentialGroup seqGroup = gl.createSequentialGroup();
-        seqGroup.addComponent(arg[0]);
+        Group outer_h = gl.createSequentialGroup().addComponent(arg[0]);
         for (ParallelGroup para : horizGroups) {
-            seqGroup.addGroup(para);
+            outer_h.addGroup(para);
         }
+        seqGroup.addGroup(outer_h);
         gl.setHorizontalGroup(seqGroup);
      
         SequentialGroup[] vertGroups = new SequentialGroup[] {gl.createSequentialGroup(), gl.createSequentialGroup(), gl.createSequentialGroup()};
@@ -139,10 +145,14 @@ public void clear() {
             vertGroups[(i-1) % vertGroups.length].addComponent(ar);
         }
         ParallelGroup seqGroupV = gl.createParallelGroup();
-        seqGroupV.addComponent(arg[0]);
+        // seqGroupV.addGroup(gl.createSequentialGroup().addComponent(arg[0]));
+        // System.out.println(seqGroupV.toString());
+        // seqGroupV.addGroup(gl.createParallelGroup().addComponent(arg[0]));
+        Group outer = gl.createParallelGroup().addComponent(arg[0]);
         for (SequentialGroup para : vertGroups) {
-            seqGroupV.addGroup(para);
+            outer.addGroup(para);
         }
+        seqGroupV.addGroup(outer);
         
 
         gl.setVerticalGroup(seqGroupV);
