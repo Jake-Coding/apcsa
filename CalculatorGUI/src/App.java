@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import javax.swing.GroupLayout.*;
 
 
 public class App extends JFrame{
@@ -27,6 +28,7 @@ public void clear() {
 }
     public App() {
         output = new JLabel("");
+        output.setPreferredSize(new Dimension(200, 30));
         ArrayList<JComponent> components = new ArrayList<JComponent>();
         components.add(output);
         for (JComponent j : getNumButtons()) {
@@ -83,12 +85,21 @@ public void clear() {
             updateOutput();
         });
         components.add(equalsButton);
+    
+        for (int i = 0; i < components.size(); i++) {
+            JComponent comp = components.get(i);
+            comp.setPreferredSize(new Dimension(50, 50));
+            comp.setSize(new Dimension(50, 50));
+            comp.setToolTipText(comp.getPreferredSize().toString() + comp.getSize().toString());
+            // comp.setPreferredSize(new Dimension(50,20));
+            components.set(i, comp);
+        }
         JComponent[] componentArr = new JComponent[components.size()];
         components.toArray(componentArr);
         
         createLayout(componentArr);
         setTitle("Calculator");
-        setSize(640, 480);
+        setSize(1000,1000);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         clear();
@@ -100,21 +111,41 @@ public void clear() {
         var gl = new GroupLayout(pane);
         pane.setLayout(gl);
 
+        JComponent[] allArgsButOne = new JComponent[arg.length-1];
+        for (int i = 1; i < arg.length; i++) {
+            allArgsButOne[i-1] = arg[i];
+        }
+        gl.linkSize(allArgsButOne);
         gl.setAutoCreateContainerGaps(true);
-        var horizGroup = gl.createParallelGroup();
-        for (int i = 0; i < arg.length; i++) {
+        gl.setAutoCreateGaps(true);
+        ParallelGroup[] horizGroups = new ParallelGroup[] {gl.createParallelGroup(), gl.createParallelGroup(), gl.createParallelGroup()};
+        
+        for (int i = 1; i < arg.length; i++) {
             JComponent ar = arg[i];
-            horizGroup.addComponent(ar);
+            horizGroups[(i-1) % (horizGroups.length)].addComponent(ar); 
         }
-        gl.setHorizontalGroup(horizGroup);
+        
+        SequentialGroup seqGroup = gl.createSequentialGroup();
+        seqGroup.addComponent(arg[0]);
+        for (ParallelGroup para : horizGroups) {
+            seqGroup.addGroup(para);
+        }
+        gl.setHorizontalGroup(seqGroup);
      
-        var vertGroup = gl.createSequentialGroup();
-        for (int i = 0; i < arg.length; i++) {
+        SequentialGroup[] vertGroups = new SequentialGroup[] {gl.createSequentialGroup(), gl.createSequentialGroup(), gl.createSequentialGroup()};
+        
+        for (int i = 1; i < arg.length; i++) {
             JComponent ar = arg[i];
-            vertGroup.addComponent(ar);
+            vertGroups[(i-1) % vertGroups.length].addComponent(ar);
         }
+        ParallelGroup seqGroupV = gl.createParallelGroup();
+        seqGroupV.addComponent(arg[0]);
+        for (SequentialGroup para : vertGroups) {
+            seqGroupV.addGroup(para);
+        }
+        
 
-        gl.setVerticalGroup(vertGroup);
+        gl.setVerticalGroup(seqGroupV);
        
     }
 
