@@ -28,24 +28,20 @@ public void clear() {
 }
     public App() {
         output = new JTextArea("");
-       output.setFont(new Font("Serif", Font.BOLD, 20)); 
+        output.setFont(new Font("Serif", Font.BOLD, 20)); 
         output.setMaximumSize(new Dimension(200, 480));
         output.setMinimumSize(new Dimension(200, 30));
         output.setPreferredSize(new Dimension(200, 40));
         output.setLineWrap(true);
         output.setEditable(false);
         ArrayList<JComponent> components = new ArrayList<JComponent>();
-        components.add(output);
-        for (JComponent j : getNumButtons()) {
-            components.add(j);
-        }
+
         JButton sqrtButton = new JButton("√");
         sqrtButton.addActionListener((event)-> {
             setOp("sqrt");
             doMath();
             updateOutput();
         });
-        components.add(sqrtButton);
         JButton clearButton = new JButton("C");
         clearButton.addActionListener((event)-> {
             clear();
@@ -71,34 +67,51 @@ public void clear() {
             updateOutput();
             
         });
-        components.add(negateButton);
-        components.add(clearButton);
+
+        JButton equalsButton = new JButton("=");
+        equalsButton.addActionListener((event)-> {
+            doMath();
+            updateOutput();
+        });
+
+
+        components.add(output);
+        for (JComponent j : getNumButtons()) {
+            components.add(j);
+        }
         for (String s : new String[] {"*", "+", "-", "/" }) {
             JButton opButton = new JButton(s);
             final String sf = s;
             opButton.addActionListener((event)-> {
                 setOp(sf);
                 updateOutput();
-                // doMath();
-
             });
             components.add(opButton);
         }
-        JButton equalsButton = new JButton("=");
-        equalsButton.addActionListener((event)-> {
-            doMath();
-            updateOutput();
-        });
+
+        components.add(sqrtButton);
+
+
+
+        components.add(negateButton);
+
         components.add(equalsButton);
+
+        components.add(clearButton);
     
         for (int i = 0; i < components.size(); i++) {
             JComponent comp = components.get(i);
             comp.setPreferredSize(new Dimension(50, 50));
             comp.setSize(new Dimension(50, 50));
+            comp.setForeground(new Color(0,0,0));
+            comp.setBackground(new Color(255,255,255));
             // comp.setToolTipText(comp.getPreferredSize().toString() + comp.getSize().toString());
             // comp.setPreferredSize(new Dimension(50,20));
             components.set(i, comp);
         }
+
+        output.setBackground(new Color(0,0,0));
+        output.setForeground(new Color(255,255,255));
         JComponent[] componentArr = new JComponent[components.size()];
         components.toArray(componentArr);
         
@@ -113,6 +126,7 @@ public void clear() {
     private void createLayout(JComponent... arg) {
 
         var pane = getContentPane();
+        pane.setBackground(new Color(0,0,0));
         var gl = new GroupLayout(pane);
         pane.setLayout(gl);
 
